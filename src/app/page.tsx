@@ -1,113 +1,177 @@
-import Image from 'next/image'
+import { IoBarChartSharp, IoPricetag } from "react-icons/io5";
+import { PiFiles } from "react-icons/pi";
+import { FaUserPlus } from "react-icons/fa";
+import Chart from "./components/Chart";
+import { CiExport } from "react-icons/ci";
+import RangeSlider, { CustomColor } from "./components/RangeSlider";
+import Navigation from "./components/Navigation";
+import BasicLineChart from "./components/Graph";
+import { CiSearch } from "react-icons/ci";
+import { IoNotificationsSharp } from "react-icons/io5";
+
+export interface TableData {
+  id: number;
+  sNo: string;
+  name: string;
+  color: CustomColor;
+  sales: string;
+}
 
 export default function Home() {
+  const salesData = [
+    {
+      id: 1,
+      img: <IoBarChartSharp color="white" />,
+      amount: "$ 1k",
+      total: "Total Sales",
+      percent: "+8% from yesterday",
+      backgroundColor: "bg-red-100",
+      iconBgColor: "bg-red-400",
+    },
+    {
+      id: 2,
+      img: <PiFiles color="white" />,
+      amount: "300",
+      total: "Total Order",
+      percent: "+5% from yesterday",
+      backgroundColor: "bg-amber-100",
+      iconBgColor: "bg-amber-400",
+    },
+    {
+      id: 3,
+      img: <IoPricetag color="white" />,
+      amount: "5",
+      total: "Total Sales",
+      percent: "+1.2% from yesterday",
+      backgroundColor: "bg-green-200",
+      iconBgColor: "bg-green-400",
+    },
+    {
+      id: 4,
+      img: <FaUserPlus color="white" />,
+      amount: "8",
+      total: "New Customers",
+      percent: "+0.5% from yesterday",
+      backgroundColor: "bg-indigo-200",
+      iconBgColor: "bg-indigo-400",
+    },
+  ];
+
+  const tableData: TableData[] = [
+    {
+      id: 1,
+      sNo: "01",
+      name: "Home decor range",
+      color: "primary",
+      sales: "17",
+    },
+    {
+      id: 2,
+      sNo: "02",
+      name: "Disney Princess Pink Bag",
+      color: "warning",
+      sales: "87",
+    },
+    {
+      id: 3,
+      sNo: "03",
+      name: "Bathroom Essentials",
+      color: "error",
+      sales: "47",
+    },
+    {
+      id: 4,
+      sNo: "04",
+      name: "Apple Smartwatches",
+      color: "success",
+      sales: "27",
+    },
+  ];
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+    <div className="grid grid-cols-8">
+      <div className="h-full col-span-1 border-b-2 border-solid border-gray">
+        <Navigation />
+      </div>
+      <div className="bg-gray-100 p-4 col-span-7">
+        <div className="flex justify-between items-center px-4">
+          <div className="w-1/2 relative">
+            <input
+              placeholder="search"
+              className="text-sm p-3 rounded-md outline-none w-full"
             />
-          </a>
+            <CiSearch className="absolute right-4 top-1/4 text-slate-500" />
+          </div>
+          <div><IoNotificationsSharp /></div>
+        </div>
+        <div className="grid grid-cols-3 p-4 gap-4">
+          <div className="w-42 bg-white h-full p-4 col-span-2 rounded-lg">
+            <div className="flex justify-between mb-5">
+              <h3 className="font-bold">Today&apos;s Sales</h3>
+              <button className="shadow-md px-6 py-2 flex justify-around items-center w-50">
+                <CiExport />
+                <span>Export</span>
+              </button>
+            </div>
+            <div className="grid grid-cols-4 gap-2">
+              {salesData.map((data) => (
+                <div
+                  key={data.id}
+                  className={`p-2 ${data.backgroundColor} rounded-xl`}
+                >
+                  <p
+                    className={`${data.iconBgColor} inline-block p-2 rounded-full`}
+                  >
+                    {data.img}
+                  </p>
+                  <p className="font-bold">{data.amount}</p>
+                  <p>{data.total}</p>
+                  <p className="text-blue-500">{data.percent}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="col-span-1 bg-white p-2 rounded-lg">
+            <div className="flex justify-between px-5">
+              <h3 className="font-bold">Order Time</h3>
+              <button className="shadow-md px-4 py-2">View Report</button>
+            </div>
+            <Chart />
+          </div>
+        </div>
+        <div className="px-4 grid grid-cols-2 gap-4">
+          <div className="bg-white rounded-lg p-4 col-span-1 w-full">
+            <h3 className="font-bold">Top Products</h3>
+            <div className="mt-4">
+              <table className="w-full">
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Name</th>
+                    <th>Popularity</th>
+                    <th>Sales</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {tableData.map((data) => (
+                    <tr key={data.id}>
+                      <td className="text-center">{data.sNo}</td>
+                      <td className="text-center">{data.name}</td>
+                      <td className="text-center">
+                        <RangeSlider color={data.color} />
+                      </td>
+                      <td className="text-center">{data.sales}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div className="bg-white rounded-lg p-4 col-span-1 w-full">
+            <BasicLineChart />
+          </div>
         </div>
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+    </div>
+  );
 }
