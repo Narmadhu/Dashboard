@@ -2,12 +2,11 @@ import { IoBarChartSharp, IoPricetag } from "react-icons/io5";
 import { PiFiles } from "react-icons/pi";
 import { FaUserPlus } from "react-icons/fa";
 import Chart from "./components/Chart";
-import { CiExport } from "react-icons/ci";
+import { CiExport, CiSearch } from "react-icons/ci";
 import RangeSlider, { CustomColor } from "./components/RangeSlider";
 import Navigation from "./components/Navigation";
 import BasicLineChart from "./components/Graph";
-import { CiSearch } from "react-icons/ci";
-import { IoNotificationsSharp } from "react-icons/io5";
+import RightTopNav from "./components/RightTopNav";
 
 export interface TableData {
   id: number;
@@ -102,7 +101,9 @@ export default function Home() {
             />
             <CiSearch className="absolute right-4 top-1/4 text-slate-500" />
           </div>
-          <div><IoNotificationsSharp /></div>
+          <div className="flex">
+            <RightTopNav />
+          </div>
         </div>
         <div className="grid grid-cols-3 p-4 gap-4">
           <div className="w-42 bg-white h-full p-4 col-span-2 rounded-lg">
