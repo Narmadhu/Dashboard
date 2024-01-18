@@ -7,6 +7,7 @@ import RangeSlider, { CustomColor } from "./components/RangeSlider";
 import Navigation from "./components/Navigation";
 import BasicLineChart from "./components/Graph";
 import RightTopNav from "./components/RightTopNav";
+import DrawerAppBar from "./components/BurgerMenu";
 
 export interface TableData {
   id: number;
@@ -88,13 +89,16 @@ export default function Home() {
   ];
 
   return (
-    <div className="grid grid-cols-8">
-      <div className="h-full col-span-1 border-b-2 border-solid border-gray">
+    <div className="grid grid-cols-6">
+      <div className="h-full col-span-1 border-b-2 border-solid border-gray hidden lg:block">
         <Navigation />
       </div>
-      <div className="bg-gray-100 p-4 col-span-7">
+      <div className="bg-gray-100 p-4 col-span-6 lg:col-span-5">
         <div className="flex justify-between items-center px-4">
-          <div className="w-1/2 relative">
+          <div className="w-1/2 relative flex">
+            <div className="block lg:hidden">
+              <DrawerAppBar />
+            </div>
             <input
               placeholder="search"
               className="text-sm p-3 rounded-md outline-none w-full"
@@ -105,8 +109,8 @@ export default function Home() {
             <RightTopNav />
           </div>
         </div>
-        <div className="grid grid-cols-3 p-4 gap-4">
-          <div className="w-42 bg-white h-full p-4 col-span-2 rounded-lg">
+        <div className="grid grid-cols-1 md:grid-cols-3 p-4 gap-4">
+          <div className="w-42 bg-white h-full p-4 md:col-span-2 rounded-lg">
             <div className="flex justify-between mb-5">
               <h3 className="font-bold">Today&apos;s Sales</h3>
               <button className="shadow-md px-6 py-2 flex justify-around items-center w-50">
@@ -114,7 +118,7 @@ export default function Home() {
                 <span>Export</span>
               </button>
             </div>
-            <div className="grid grid-cols-4 gap-2">
+            <div className="gap-2 grid-cols-none grid md:grid-cols-4">
               {salesData.map((data) => (
                 <div
                   key={data.id}
@@ -132,7 +136,7 @@ export default function Home() {
               ))}
             </div>
           </div>
-          <div className="col-span-1 bg-white p-2 rounded-lg">
+          <div className="md:col-span-1 bg-white p-2 rounded-lg">
             <div className="flex justify-between px-5">
               <h3 className="font-bold">Order Time</h3>
               <button className="shadow-md px-4 py-2">View Report</button>
@@ -140,7 +144,7 @@ export default function Home() {
             <Chart />
           </div>
         </div>
-        <div className="px-4 grid grid-cols-2 gap-4">
+        <div className="px-4 grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="bg-white rounded-lg p-4 col-span-1 w-full">
             <h3 className="font-bold">Top Products</h3>
             <div className="mt-4">
